@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Link from 'next/link';
 import { format, parseISO, isToday, isTomorrow, formatDistanceToNowStrict, addDays, isPast } from 'date-fns';
-import { AlarmClock, CalendarDays, NotebookText, ChevronRight, Info } from 'lucide-react';
+import { AlarmClock, CalendarDays, NotebookText, ChevronRight, Info, TimerIcon } from 'lucide-react';
 
 // Helper to format event dates
 const formatEventDate = (start: Date, end: Date, allDay?: boolean): string => {
