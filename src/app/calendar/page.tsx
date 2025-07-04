@@ -159,6 +159,11 @@ export default function CalendarPage() {
   const handleDateSelect = (date?: Date) => {
     setSelectedDate(date);
   };
+  
+  const handleDayDoubleClick = (day: Date) => {
+    setSelectedDate(day);
+    openEventForm();
+  };
 
   const openEventForm = (event?: CalendarEvent) => {
     setEditingEvent(event || null);
@@ -231,6 +236,7 @@ export default function CalendarPage() {
             mode="single"
             selected={selectedDate}
             onSelect={handleDateSelect}
+            onDayDoubleClick={handleDayDoubleClick}
             numberOfMonths={3}
             modifiers={{ events: eventDays }}
             modifiersClassNames={{ events: 'bg-primary/20 rounded-full' }}
