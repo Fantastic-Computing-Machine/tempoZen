@@ -208,7 +208,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   // Desktop view remains the same.
   return (
     <SidebarProvider open={open} onOpenChange={setOpen} defaultOpen={!isMobile}>
-        <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
+        <Sidebar side="left" variant="floating" collapsible="icon" className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
           {sidebarContent}
         </Sidebar>
       <SidebarInset>
