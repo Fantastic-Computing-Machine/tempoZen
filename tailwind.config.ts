@@ -11,7 +11,7 @@ export default {
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['Belleza', 'sans-serif'],
+        headline: ['Inter', 'sans-serif'], // Changed to Inter for consistency
         code: ['monospace'],
       },
       colors: {
@@ -70,6 +70,10 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        xl: 'calc(var(--radius) + 4px)',
+        '2xl': 'calc(var(--radius) + 8px)',
+        '3xl': 'calc(var(--radius) + 16px)',
+        full: '9999px',
       },
       keyframes: {
         'accordion-down': {

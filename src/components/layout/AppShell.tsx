@@ -42,7 +42,7 @@ const navItems = [
   { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit },
 ];
 
-// Define items for the mobile navigation
+// Define items for the mobile navigation, matching the user's image style
 const mobileNavItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/calendar', label: 'Calendar', icon: CalendarDays },
@@ -91,13 +91,7 @@ const MobileBottomNav = () => {
         {/* Floating Action Button */}
         <Link href={fabItem.href} passHref>
           <div
-            className="flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg"
-            style={{
-              backgroundColor: 'rgba(20, 20, 20, 0.75)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
           >
             <fabItem.icon className="h-6 w-6" />
             <span className="sr-only">{fabItem.label}</span>
@@ -119,13 +113,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
     const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-      document.documentElement.classList.add('dark');
-    }
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
   }, []);
   
   useEffect(() => {
@@ -146,8 +137,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2">
-          <Zap className="w-8 h-8 text-primary" />
-          <h1 className="font-headline text-2xl font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+          <Zap className="w-8 h-8 text-sidebar-primary" />
+          <h1 className="font-semibold text-2xl text-sidebar-foreground group-data-[collapsible=icon]:hidden">
             TempoZen
           </h1>
         </Link>
@@ -176,10 +167,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       </SidebarContent>
       <Separator className="bg-sidebar-border group-data-[collapsible=icon]:hidden" />
       <SidebarFooter className="p-4 mt-auto">
-        <Button variant="ghost" onClick={toggleTheme} className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center">
+        <Button variant="ghost" onClick={toggleTheme} className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center hover:bg-sidebar-accent">
           {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           <span className="group-data-[collapsible=icon]:hidden">
-            Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+            Switch to {theme === 'light' ? 'Dark' : 'Light'}
           </span>
         </Button>
       </SidebarFooter>
@@ -206,7 +197,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   // Desktop view remains the same.
   return (
     <SidebarProvider open={open} onOpenChange={setOpen} defaultOpen={!isMobile}>
-        <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r border-sidebar-border">
+        <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
           {sidebarContent}
         </Sidebar>
       <SidebarInset>
