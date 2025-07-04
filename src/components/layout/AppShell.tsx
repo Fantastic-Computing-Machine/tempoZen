@@ -28,6 +28,7 @@ import {
   Menu,
   Moon,
   Sun,
+  Globe,
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -40,6 +41,7 @@ const navItems = [
   { href: '/calendar', label: 'Calendar', icon: CalendarDays },
   { href: '/notes', label: 'Notes', icon: NotebookText },
   { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit },
+  { href: '/world-clock', label: 'World Clock', icon: Globe },
 ];
 
 // Define items for the mobile navigation, matching the user's image style
@@ -47,6 +49,7 @@ const mobileNavItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/calendar', label: 'Calendar', icon: CalendarDays },
   { href: '/notes', label: 'Notes', icon: NotebookText },
+  { href: '/world-clock', label: 'Clock', icon: Globe },
 ];
 
 // Define the floating action button item
@@ -109,6 +112,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -205,6 +216,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-background/80 backdrop-blur-md px-6">
                 <div className="flex items-center">
                    <SidebarTrigger className="hidden md:group-data-[collapsible=icon]/sidebar-wrapper:flex" />
+                </div>
+                 <div className="font-mono text-lg font-semibold text-foreground">
+                    {currentTime}
                 </div>
             </header>
           <main className="flex-1 p-4 md:p-8 overflow-y-auto">

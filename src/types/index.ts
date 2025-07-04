@@ -39,3 +39,9 @@ export interface CalendarEvent {
   createdAt: number;
   allDay?: boolean;
 }
+
+export interface WorldClock {
+  id: string;
+  timezone: string; // IANA timezone name e.g., "America/New_York"
+  label: string; // e.g., "New York"
+}
