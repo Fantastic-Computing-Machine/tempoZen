@@ -98,7 +98,7 @@ const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50" role="navigation">
       <TooltipProvider>
-        <div className="flex h-16 items-end gap-3 rounded-2xl p-3 shadow-lg"
+        <div className="flex items-center gap-2 rounded-2xl p-2 shadow-lg"
           style={{
             backgroundColor: 'rgba(20, 20, 20, 0.75)',
             backdropFilter: 'blur(12px)',
@@ -112,13 +112,13 @@ const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
               <TooltipTrigger asChild>
                 <Link href={item.href} passHref>
                   <div className={cn(
-                    "flex flex-col items-center gap-1 transition-all duration-200 ease-in-out hover:scale-110 hover:-translate-y-1",
-                    isActive ? "-translate-y-1" : ""
+                    "relative flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ease-in-out hover:scale-110",
+                    isActive ? "-translate-y-1" : "hover:-translate-y-1"
                   )}>
-                    {isActive && <div className="h-1 w-1 rounded-full bg-white" />}
+                    {isActive && <div className="absolute -top-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-white" />}
                     <div
                       className={cn(
-                        'flex items-center justify-center rounded-lg p-2 text-white transition-colors',
+                        'flex h-full w-full items-center justify-center rounded-lg text-white transition-colors',
                         isActive ? 'bg-white/10' : ''
                       )}
                     >
@@ -132,10 +132,15 @@ const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
               </TooltipContent>
             </Tooltip>
           )})}
-          <Separator orientation="vertical" className="h-10 self-center bg-white/10 mx-2" />
+          <Separator orientation="vertical" className="h-8 self-center bg-white/10 mx-1" />
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-12 w-12 rounded-lg text-white hover:bg-white/10 hover:text-white transition-all duration-200 ease-in-out hover:scale-110 hover:-translate-y-1">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleTheme} 
+                className="rounded-lg text-white hover:bg-white/10 hover:text-white transition-all duration-200 ease-in-out hover:scale-110 hover:-translate-y-1"
+              >
                 {theme === 'light' ? <Moon className="h-6 w-6" /> : <Sun className="h-6 w-6" />}
               </Button>
             </TooltipTrigger>
