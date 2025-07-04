@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import type { CalendarEvent, Note } from '@/types';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -225,7 +226,7 @@ export default function CalendarPage() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 shadow-lg">
+        <Card className="md:col-span-2">
           <CardContent className="p-0 md:p-2">
             <ShadCalendar
               mode="single"
@@ -238,7 +239,7 @@ export default function CalendarPage() {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-1 shadow-lg">
+        <Card className="md:col-span-1">
           <CardHeader>
             <CardTitle className="font-headline text-xl">
                 <ListChecks className="inline-block mr-2 h-6 w-6 text-primary" />

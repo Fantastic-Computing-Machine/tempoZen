@@ -207,7 +207,7 @@ export default function NotesPage() {
           {filteredNotes.map(note => {
             const associatedEvent = note.calendarEventId ? events.find(e => e.id === note.calendarEventId) : null;
             return (
-              <Card key={note.id} className="flex flex-col shadow-md hover:shadow-lg transition-shadow">
+              <Card key={note.id} className="flex flex-col transition-shadow">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl truncate">{note.title || 'Untitled Note'}</CardTitle>
                   <CardDescription>Last updated: {format(new Date(note.updatedAt), 'PPp')}</CardDescription>

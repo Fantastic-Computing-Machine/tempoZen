@@ -57,7 +57,7 @@ export default function SchedulerPage() {
         <p className="text-muted-foreground text-lg">Let AI help you find the best time for your meetings based on your notes.</p>
       </div>
 
-      <Card className="shadow-lg">
+      <Card>
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle className="font-headline text-2xl">Analyze Your Notes</CardTitle>
@@ -96,7 +96,7 @@ export default function SchedulerPage() {
       </Card>
 
       {suggestion && (
-        <Card className="shadow-lg">
+        <Card>
           <CardHeader>
             <CardTitle className="font-headline text-2xl flex items-center">
                 <CheckCircle2 className="mr-2 h-7 w-7 text-green-500" />

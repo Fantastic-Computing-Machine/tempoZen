@@ -50,7 +50,7 @@ const TimerInstance: React.FC<TimerInstanceProps> = ({ timer, onUpdate, onDelete
   const progressPercentage = timer.duration > 0 ? ((timer.duration - timer.remaining) / timer.duration) * 100 : 0;
 
   return (
-    <Card className="w-full shadow-md hover:shadow-lg transition-shadow">
+    <Card className="w-full transition-shadow">
       <CardHeader>
         <CardTitle className="font-headline text-xl flex justify-between items-center">
           {timer.label || 'Timer'}
@@ -135,7 +135,7 @@ export default function TimersPage() {
         <p className="text-muted-foreground text-lg">Create and manage your countdown timers.</p>
       </div>
 
-      <Card className="shadow-lg">
+      <Card>
         <CardHeader>
           <CardTitle className="font-headline text-2xl">Add New Timer</CardTitle>
         </CardHeader>

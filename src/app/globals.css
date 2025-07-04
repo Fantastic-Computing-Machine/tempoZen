@@ -4,99 +4,80 @@
 
 @layer base {
   :root {
-    --background: 40 17% 95%; /* Off-white #F4F3F1 */
-    --foreground: 240 10% 20%; /* Dark Gray #2D2D33 */
-
-    --card: 40 17% 98%; /* Lighter Off-white #FAF9F7 */
-    --card-foreground: 240 10% 20%; /* Dark Gray */
-
-    --popover: 40 17% 98%; /* Lighter Off-white */
-    --popover-foreground: 240 10% 20%; /* Dark Gray */
-
-    --primary: 152 16% 61%; /* Sage Green #8BAC9D */
-    --primary-foreground: 152 30% 96%; /* Very Light Sage/Almost White #F0F5F3 */
-
-    --secondary: 152 12% 75%; /* Lighter Sage #B4C4BD */
-    --secondary-foreground: 152 16% 30%; /* Darker Sage #405048 */
-
-    --muted: 40 10% 90%; /* Grayish Off-white #E8E6E3 */
-    --muted-foreground: 240 5% 45%; /* Medium Gray #6B6B73 */
-
-    --accent: 0 19% 71%; /* Dusty Rose #C4A4A4 */
-    --accent-foreground: 0 30% 96%; /* Very Light Rose/Almost White #F5F0F0 */
-
-    --destructive: 0 70% 55%; /* Standard destructive red */
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 152 10% 80%; /* Sage Tinted Border #C2CEC9 */
-    --input: 40 15% 97%; /* Slightly Off-white #F7F6F4, distinct from background */
-    --ring: 152 16% 55%; /* Darker Sage #7EA08F for focus rings */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
     
-    --chart-1: 152 16% 61%;
-    --chart-2: 0 19% 71%;
-    --chart-3: 152 12% 75%;
+    --chart-1: 222.2 47.4% 11.2%;
+    --chart-2: 152 16% 61%;
+    --chart-3: 0 19% 71%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem;
-
     /* Sidebar specific colors */
-    --sidebar-background: 152 14% 55%; /* Darker Sage Green #7B968A */
-    --sidebar-foreground: 152 20% 95%; /* Light Sage/Off-white #EFF3F1 */
-    --sidebar-primary: 0 19% 71%; /* Accent (Dusty Rose) for active/hover #C4A4A4 */
-    --sidebar-primary-foreground: 0 30% 20%; /* Dark Rose/Maroon #4D3C3C */
-    --sidebar-accent: 152 14% 65%; /* Medium Sage #97AD9F for hover */
-    --sidebar-accent-foreground: 152 20% 95%; /* Light Sage/Off-white */
-    --sidebar-border: 152 10% 50%; /* Darkest Sage #728B7F */
-    --sidebar-ring: 0 19% 65%; /* Lighter Dusty Rose #D1B9B9 */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 215 20.2% 65.1%;
   }
 
   .dark {
-    /* For dark mode, we can invert or use a predefined dark theme.
-       For now, let's define a darker version of the custom theme.
-       This might need more refinement for optimal aesthetics. */
-    --background: 240 10% 10%; /* Dark Grayish Blue */
-    --foreground: 40 10% 90%; /* Light Grayish Off-white */
-
-    --card: 240 10% 15%;
-    --card-foreground: 40 10% 90%;
-
-    --popover: 240 10% 15%;
-    --popover-foreground: 40 10% 90%;
-
-    --primary: 152 16% 55%; /* Slightly desaturated Sage for dark mode */
-    --primary-foreground: 152 30% 92%;
-
-    --secondary: 152 12% 35%; /* Darker Lighter Sage */
-    --secondary-foreground: 152 16% 80%;
-
-    --muted: 240 10% 20%;
-    --muted-foreground: 40 5% 65%;
-
-    --accent: 0 19% 55%; /* Slightly desaturated Dusty Rose for dark mode */
-    --accent-foreground: 0 30% 92%;
-    
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
 
-    --border: 152 10% 30%;
-    --input: 240 10% 22%;
-    --ring: 152 16% 50%;
-    
-    --chart-1: 152 16% 55%;
-    --chart-2: 0 19% 55%;
-    --chart-3: 152 12% 45%;
+    --chart-1: 210 40% 98%;
+    --chart-2: 152 16% 55%;
+    --chart-3: 0 19% 55%;
     --chart-4: 43 74% 56%;
     --chart-5: 27 87% 57%;
 
-    --sidebar-background: 152 14% 25%; /* Very Dark Sage */
-    --sidebar-foreground: 152 20% 85%;
-    --sidebar-primary: 0 19% 55%;
-    --sidebar-primary-foreground: 0 30% 90%;
-    --sidebar-accent: 152 14% 35%;
-    --sidebar-accent-foreground: 152 20% 85%;
-    --sidebar-border: 152 10% 20%;
-    --sidebar-ring: 0 19% 50%;
+    /* Sidebar specific colors */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 215 20.2% 65.1%;
   }
 }
 

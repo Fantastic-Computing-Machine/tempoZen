@@ -20,7 +20,7 @@ const formatEventDate = (start: Date, end: Date, allDay?: boolean): string => {
     return `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d')}`;
   }
   if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
-    return `${format(startDate, 'MMM d, p')} - ${format(endDate, 'p')}`;
+    return `${format(startDate, 'p')} - ${format(endDate, 'p')}`;
   }
   return `${format(startDate, 'MMM d, p')} - ${format(endDate, 'MMM d, p')}`;
 };
@@ -45,7 +45,7 @@ const UpcomingEventsClient = () => {
   }, [events]);
 
   return (
-    <Card className="shadow-lg">
+    <Card>
       <CardHeader>
         <CardTitle className="font-headline flex items-center text-xl">
           <CalendarDays className="mr-2 h-6 w-6 text-primary" />
@@ -110,7 +110,7 @@ const ActiveAlarmsClient = () => {
   }, [alarms]);
 
   return (
-    <Card className="shadow-lg">
+    <Card>
       <CardHeader>
         <CardTitle className="font-headline flex items-center text-xl">
           <AlarmClock className="mr-2 h-6 w-6 text-primary" />
@@ -156,7 +156,7 @@ const RecentNotesClient = () => {
   }, [notes]);
 
   return (
-    <Card className="shadow-lg">
+    <Card>
       <CardHeader>
         <CardTitle className="font-headline flex items-center text-xl">
           <NotebookText className="mr-2 h-6 w-6 text-primary" />
@@ -217,7 +217,7 @@ export default function DashboardPage() {
         <RecentNotesClient />
       </div>
 
-      <Card className="shadow-lg">
+      <Card>
         <CardHeader>
           <CardTitle className="font-headline flex items-center text-xl">
             <Info className="mr-2 h-6 w-6 text-primary" />
