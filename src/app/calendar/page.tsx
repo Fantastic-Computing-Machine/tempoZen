@@ -225,28 +225,26 @@ export default function CalendarPage() {
         </Dialog>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2">
-          <CardContent className="p-0 md:p-2">
-            <ShadCalendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              className="rounded-md"
-              modifiers={{ events: eventDays }}
-              modifiersClassNames={{ events: 'bg-primary/20 rounded-full text-primary-foreground' }}
-            />
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 flex justify-center">
+          <ShadCalendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={handleDateSelect}
+            numberOfMonths={3}
+            modifiers={{ events: eventDays }}
+            modifiersClassNames={{ events: 'bg-primary/20 rounded-full' }}
+          />
+        </div>
 
-        <Card className="md:col-span-1">
+        <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle className="font-headline text-xl">
                 <ListChecks className="inline-block mr-2 h-6 w-6 text-primary" />
                 Events on {selectedDate ? format(selectedDate, 'MMMM d, yyyy') : 'selected date'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="max-h-[400px] overflow-y-auto">
+          <CardContent className="max-h-[600px] overflow-y-auto">
             {eventsOnSelectedDate.length > 0 ? (
               <ul className="space-y-3">
                 {eventsOnSelectedDate.map(event => (
