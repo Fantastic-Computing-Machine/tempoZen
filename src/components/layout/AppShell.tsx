@@ -42,28 +42,31 @@ const navItems = [
   { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit },
 ];
 
+// Define items for the mobile navigation
 const mobileNavItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/calendar', label: 'Calendar', icon: CalendarDays },
   { href: '/notes', label: 'Notes', icon: NotebookText },
 ];
 
+// Define the floating action button item
 const fabItem = { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit };
 
 const MobileBottomNav = () => {
   const pathname = usePathname();
 
   return (
+    // The container is fixed to the bottom and centered.
     <div className="fixed bottom-4 left-0 right-0 z-50 flex items-center justify-center px-4" role="navigation">
       <div className="flex items-center gap-3">
-        {/* Main Nav Group */}
+        {/* Main Nav Group with glass morphism style */}
         <div
           className="flex items-center gap-1 rounded-full p-2 shadow-lg"
           style={{
-            backgroundColor: 'rgba(20, 20, 20, 0.75)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(20, 20, 20, 0.75)', // Semi-transparent black
+            backdropFilter: 'blur(12px)', // The "glass" effect
+            WebkitBackdropFilter: 'blur(12px)', // For Safari
+            border: '1px solid rgba(255, 255, 255, 0.1)', // Subtle border
           }}
         >
           {mobileNavItems.map((item) => {
@@ -73,10 +76,12 @@ const MobileBottomNav = () => {
                 <div
                   className={cn(
                     'flex items-center gap-2 rounded-full transition-all duration-300 ease-in-out',
+                    // Active state has a white background, black text, and padding
                     isActive ? 'bg-white text-black px-4 py-2' : 'text-white p-2'
                   )}
                 >
                   <item.icon className="h-5 w-5 shrink-0" />
+                  {/* Label is only shown for the active item */}
                   {isActive && <span className="text-sm font-medium">{item.label}</span>}
                 </div>
               </Link>
@@ -184,10 +189,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   if (!mounted) {
     return <div className="flex h-screen w-screen items-center justify-center bg-background"><Zap className="w-12 h-12 animate-pulse text-primary" /></div>; // Or a proper skeleton loader
   }
-
+  
+  // Conditionally rendering based on `isMobile`.
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen bg-background">
+        {/* Add padding to the bottom to make space for the nav bar */}
         <main className="flex-1 p-4 overflow-y-auto pb-28">
             {children}
         </main>
@@ -196,6 +203,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
+  // Desktop view remains the same.
   return (
     <SidebarProvider open={open} onOpenChange={setOpen} defaultOpen={!isMobile}>
         <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r border-sidebar-border">
