@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { PlusCircle, Trash2, Sun, Moon, Globe } from 'lucide-react';
+import { PlusCircle, Trash2, Sun, Moon, Globe, Check, ChevronsUpDown } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { timezones } from '@/lib/timezones';
+import { cn } from '@/lib/utils';
 
 interface WorldClockCardProps {
   clock: WorldClock;
@@ -73,6 +77,55 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({ clock, onDelete }) => {
   );
 };
 
+function TimezoneCombobox({ value, onChange }: { value: string, onChange: (value: string) => void }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+        >
+          {value ? timezones.find((tz) => tz.toLowerCase() === value.toLowerCase()) || "Select timezone..." : "Select timezone..."}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+        <Command>
+          <CommandInput placeholder="Search timezone..." />
+          <CommandEmpty>No timezone found.</CommandEmpty>
+          <CommandList>
+            <CommandGroup>
+              {timezones.map((tz) => (
+                <CommandItem
+                  key={tz}
+                  value={tz}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : tz);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value.toLowerCase() === tz.toLowerCase() ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {tz}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+
 export default function WorldClockPage() {
   const [clocks, setClocks] = useLocalStorage<WorldClock[]>('world-clocks', []);
   const [newLabel, setNewLabel] = useState('');
@@ -89,7 +142,7 @@ export default function WorldClockPage() {
       // Test the timezone validity
       new Intl.DateTimeFormat('en-US', { timeZone: newTimezone }).format();
     } catch (e) {
-      toast({ title: "Invalid Timezone", description: "Please enter a valid IANA timezone name (e.g., America/New_York).", variant: "destructive" });
+      toast({ title: "Invalid Timezone", description: "The selected timezone is not valid.", variant: "destructive" });
       return;
     }
 
@@ -131,7 +184,7 @@ export default function WorldClockPage() {
             </div>
             <div>
               <Label htmlFor="timezone">IANA Timezone</Label>
-              <Input id="timezone" value={newTimezone} onChange={e => setNewTimezone(e.target.value)} placeholder="e.g., America/New_York" />
+              <TimezoneCombobox value={newTimezone} onChange={setNewTimezone} />
             </div>
           </div>
         </CardContent>
