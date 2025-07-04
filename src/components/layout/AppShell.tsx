@@ -186,8 +186,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen bg-background">
-        <main className="flex-1 p-4 overflow-y-auto pb-28">
-            {children}
+        <main className="flex-1 overflow-y-auto pb-28">
+            <div className="w-full max-w-7xl mx-auto p-4">
+              {children}
+            </div>
         </main>
         <MobileBottomNav />
       </div>
@@ -196,13 +198,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-end border-b bg-background/80 backdrop-blur-md px-6">
-            <div className="font-mono text-lg font-semibold">
-                {currentTime}
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-center border-b bg-background/80 backdrop-blur-md px-4 md:px-8">
+            <div className="flex w-full max-w-7xl items-center justify-end">
+                <div className="font-mono text-lg font-semibold">
+                    {currentTime}
+                </div>
             </div>
         </header>
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto pb-28">
-        {children}
+      <main className="flex-1 overflow-y-auto pb-28">
+        <div className="w-full max-w-7xl mx-auto p-4 md:p-8">
+            {children}
+        </div>
       </main>
       <DesktopDock theme={theme} toggleTheme={toggleTheme} />
     </div>
