@@ -1,32 +1,15 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import type { CalendarEvent, Alarm, Note } from '@/types';
+import type { CalendarEvent, Alarm, Note, Settings } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import Link from 'next/link';
-import { format, parseISO, isToday, isTomorrow, formatDistanceToNowStrict, addDays, isPast } from 'date-fns';
+import { format, parseISO, isToday, isTomorrow, formatDistanceToNowStrict, addDays } from 'date-fns';
 import { AlarmClock, CalendarDays, NotebookText, ChevronRight, Info, TimerIcon } from 'lucide-react';
 
-// Helper to format event dates
-const formatEventDate = (start: Date, end: Date, allDay?: boolean): string => {
-  const startDate = start;
-  const endDate = end;
-  if (allDay) {
-    if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
-      return format(startDate, 'MMM d');
-    }
-    return `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d')}`;
-  }
-  if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
-    return `${format(startDate, 'p')} - ${format(endDate, 'p')}`;
-  }
-  return `${format(startDate, 'MMM d, p')} - ${format(endDate, 'MMM d, p')}`;
-};
-
 const UpcomingEventsClient = () => {
-  const [events, setEvents] = useLocalStorage<CalendarEvent[]>('calendarEvents', []);
+  const [events] = useLocalStorage<CalendarEvent[]>('calendarEvents', []);
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
 
   useEffect(() => {
@@ -93,13 +76,7 @@ const ActiveAlarmsClient = () => {
     
     const filtered = alarms.filter(alarm => {
       if (!alarm.isEnabled) return false;
-      // For simplicity, show all enabled alarms, or implement more complex "upcoming" logic
-      // For repeating alarms, check if today is one of the days
       if (alarm.days.length > 0 && !alarm.days.includes(currentDay)) return false;
-      
-      // If it's a one-time alarm (no days set), check if it's in the future today or past today but not too old
-      // This logic can be complex. For dashboard, showing next few "active" ones is enough.
-      // For now, just list enabled alarms.
       return true; 
     }).sort((a,b) => {
         const timeA = parseInt(a.time.replace(':',''));
@@ -192,12 +169,18 @@ const RecentNotesClient = () => {
   );
 };
 
+const DEFAULT_SETTINGS: Settings = {
+  username: 'User',
+  theme: 'system',
+  geminiApiKey: '',
+  defaultTimezone: typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'UTC',
+};
+
 export default function DashboardPage() {
-  const [userName, setUserName] = useState<string>("User"); // Placeholder
+  const [settings] = useLocalStorage<Settings>('settings', DEFAULT_SETTINGS);
   const [greeting, setGreeting] = useState<string>("Hello");
 
   useEffect(() => {
-    // Could fetch user name from auth or localStorage
     const hour = new Date().getHours();
     if (hour < 12) setGreeting("Good Morning");
     else if (hour < 18) setGreeting("Good Afternoon");
@@ -207,7 +190,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-headline text-3xl md:text-4xl">{greeting}, {userName}!</h1>
+        <h1 className="font-headline text-3xl md:text-4xl">{greeting}, {settings.username}!</h1>
         <p className="text-muted-foreground text-lg">Here's your overview for today.</p>
       </div>
 

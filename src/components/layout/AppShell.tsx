@@ -19,13 +19,14 @@ import {
   NotebookText,
   BrainCircuit,
   Zap,
-  Menu,
   Moon,
   Sun,
   Globe,
+  Settings,
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 
 const navItems = [
@@ -36,13 +37,14 @@ const navItems = [
   { href: '/notes', label: 'Notes', icon: NotebookText },
   { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit },
   { href: '/world-clock', label: 'World Clock', icon: Globe },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 const mobileNavItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/calendar', label: 'Calendar', icon: CalendarDays },
   { href: '/notes', label: 'Notes', icon: NotebookText },
-  { href: '/world-clock', label: 'Clock', icon: Globe },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 const fabItem = { href: '/scheduler', label: 'AI Scheduler', icon: BrainCircuit };
@@ -92,7 +94,7 @@ const MobileBottomNav = () => {
   );
 };
 
-const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () => void; }) => {
+const DesktopDock = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void; }) => {
   const pathname = usePathname();
 
   return (
@@ -139,13 +141,13 @@ const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
                 variant="ghost" 
                 size="icon" 
                 onClick={toggleTheme} 
-                className="rounded-lg text-white hover:bg-white/10 hover:text-white transition-all duration-200 ease-in-out hover:scale-110 hover:-translate-y-1"
+                className="rounded-lg text-white hover:bg-white/10 hover:text-white transition-all duration-200 ease-in-out hover:scale-110 hover:-translate-y-1 h-10 w-10 flex items-center justify-center"
               >
-                {theme === 'light' ? <Moon className="h-6 w-6" /> : <Sun className="h-6 w-6" />}
+                {isDark ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top" className="mb-2">
-              <p>Switch to {theme === 'light' ? 'Dark' : 'Light'}</p>
+              <p>Switch to {isDark ? 'Light' : 'Dark'}</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -158,7 +160,8 @@ const DesktopDock = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useLocalStorage<'light' | 'dark' | 'system'>('theme', 'system');
+  const [isDark, setIsDark] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -170,18 +173,33 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
-    setTheme(initialTheme);
-    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
   }, []);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      const isSystemDark = mediaQuery.matches;
+      if (theme === 'dark' || (theme === 'system' && isSystemDark)) {
+        root.classList.add('dark');
+        setIsDark(true);
+      } else {
+        root.classList.remove('dark');
+        setIsDark(false);
+      }
+    };
+    
+    applyTheme();
+
+    mediaQuery.addEventListener('change', applyTheme);
+    return () => mediaQuery.removeEventListener('change', applyTheme);
+  }, [theme]);
   
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    // Dock toggle just switches between light and dark
+    const newTheme = isDark ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
   if (!mounted) {
@@ -215,7 +233,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             {children}
         </div>
       </main>
-      <DesktopDock theme={theme} toggleTheme={toggleTheme} />
+      <DesktopDock isDark={isDark} toggleTheme={toggleTheme} />
     </div>
   );
 }

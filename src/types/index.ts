@@ -45,3 +45,10 @@ export interface WorldClock {
   timezone: string; // IANA timezone name e.g., "America/New_York"
   label: string; // e.g., "New York"
 }
+
+export interface Settings {
+  username: string;
+  theme: 'light' | 'dark' | 'system';
+  geminiApiKey: string;
+  defaultTimezone: string;
+}

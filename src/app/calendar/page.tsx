@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { PlusCircle, Edit3, Trash2, Save, CalendarDays, ListChecks, NotebookTextIcon } from 'lucide-react';
+import { PlusCircle, Edit3, Trash2, Save, CalendarDays, ListChecks, NotebookTextIcon, Undo2 } from 'lucide-react';
 import { format, parseISO, startOfDay, isEqual, isBefore, addMinutes } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
 
@@ -220,14 +220,19 @@ export default function CalendarPage() {
           <h1 className="font-headline text-3xl md:text-4xl">Calendar</h1>
           <p className="text-muted-foreground text-lg">Manage your events and schedule.</p>
         </div>
-        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => openEventForm()} size="lg">
-              <PlusCircle className="mr-2 h-5 w-5" /> Add Event
-            </Button>
-          </DialogTrigger>
-          {isFormOpen && <EventForm event={editingEvent} notes={notes} selectedDate={selectedDate || new Date()} onSave={saveEvent} onClose={closeEventForm} />}
-        </Dialog>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={() => handleDateSelect(new Date())}>
+            <Undo2 className="mr-2 h-4 w-4" /> Today
+          </Button>
+          <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => openEventForm()} size="lg">
+                <PlusCircle className="mr-2 h-5 w-5" /> Add Event
+              </Button>
+            </DialogTrigger>
+            {isFormOpen && <EventForm event={editingEvent} notes={notes} selectedDate={selectedDate || new Date()} onSave={saveEvent} onClose={closeEventForm} />}
+          </Dialog>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
